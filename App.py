@@ -70,7 +70,7 @@ def create_stocks():
     lSymbols = {}
     # Generate Files Stocks
     #location = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Downloads') + '\\'
-    location = 'C:\\Users\\sreyes\Downloads\\'
+    location = 'C:\\Users\\sreyes\\Downloads\\'
 
     for stock in symbol:
         lStock = stock.strip().upper()
