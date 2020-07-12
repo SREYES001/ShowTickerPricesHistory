@@ -1,0 +1,45 @@
+{% extends 'layout.html'%}
+{% block body %}
+{% with messages = get_flashed_messages() %}
+
+<div class="col-md-4 offset-md-4">
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="card card-body">
+        <form action="/create_stocks" method="POST" class="form-main">
+
+            <div class="form-group">
+                <label for="iDateFrom">Date From</label>
+                <input type="text" name="datefrom" class="form-control" placeholder="mm/dd/yyyy" id="iDateFrom">
+            </div>
+            <div class="form-group">
+                <label for="iDateTo">Date To</label>
+                <input type="text" name="dateto" class="form-control" placeholder="mm/dd/yyyy" id="iDateTo">
+            </div>
+
+            <div class="form-group">
+                <label for="iStockTextarea">Input Stocks (Example: KO,AAPL,DIS)</label>
+                <textarea name="StockTextarea" class="form-control" id="iStockTextarea" rows="3" placeholder="KO,AAPL,DIS"></textarea>
+            </div>            
+
+            <div class="center">
+                <button type="submit" class="tn btn-lg btn-rigth">Submit</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
