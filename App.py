@@ -56,7 +56,7 @@ def create_stocks():
         return redirect(url_for('Index'))        
 
     # Get number of days<
-    SD = (ED - datetime.timedelta(days=20))
+    SD = (ED - datetime.timedelta(days=18))
 
 
     tree_stocks = {}
@@ -74,7 +74,9 @@ def create_stocks():
             tree_stock = {}    
 
             #Build List Dates
-            list_dates = []        
+            list_dates = []   
+
+            list_dates.append('Date')     
         
             for i in range(len(f)):
                 if i == 0:
@@ -84,7 +86,9 @@ def create_stocks():
 
             #Build List Prices
             list_prices = []
-        
+            
+            list_prices.append('Close Price')
+
             for i in range(len(f)):
                 if i == 0:
                     list_prices.append("{:.2f}".format(f.loc[f.index[date_index - i],'Close']))
