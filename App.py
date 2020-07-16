@@ -14,7 +14,7 @@ app.secret_key = 'mysecretkey'
 
 def ObtainDate(pDate):
     try:  # strptime throws an exception if the input doesn't match the pattern
-        d = datetime.datetime.strptime(pDate, "%m/%d/%Y")
+        d = datetime.datetime.strptime(pDate, "%Y-%m-%d")
     except:
         print('Incorrect date format\n')
         flash('Invalid date format. Please, input a valid date.')
@@ -32,16 +32,23 @@ def Index():
 def create_stocks():
 
     # read ticker symbols from the text area
-    StockTextarea = request.form['StockTextarea'].upper()
+    StockTextarea = request.form['StockTextarea'].upper().replace(" ", "")
 
     if StockTextarea.strip() == '':
         flash('Please, Input Stocks on Stock Area')
         return redirect(url_for('Index'))
 
     symbol = StockTextarea.split(',')
+
+    # Get Start Date
+    SD = ObtainDate(request.form['datefrom'])
+     
+    #Print if there is a error with the date SD
+    if SD == '':
+        return redirect(url_for('Index'))    
     
     # Get End Date
-    ED = ObtainDate(request.form['lastdate'])
+    ED = ObtainDate(request.form['dateto'])
     
     #Print if there is a error with the date ED
     if ED == '':
@@ -50,14 +57,28 @@ def create_stocks():
    # Get Current Date
     TD = datetime.date.today()
 
+   #Print if there is a error with the date ED
+    if SD.strftime("%Y%m%d") > TD.strftime("%Y%m%d"):
+        flash('The start date can not higher than today')
+        return redirect(url_for('Index'))  
+
     #Print if there is a error with the date ED
     if ED.strftime("%Y%m%d") > TD.strftime("%Y%m%d"):
-        flash('The date can not higher than today')
-        return redirect(url_for('Index'))        
+        flash('The end date can not higher than today')
+        return redirect(url_for('Index'))  
+
+    #Print if there is a error with the date ED
+    if ED <  SD:
+        flash('The end date can''t be less than the start date')
+        return redirect(url_for('Index'))           
 
     # Get number of days<
-    SD = (ED - datetime.timedelta(days=18))
+    dt = (ED - SD)
+    countDays = dt.days
 
+    if countDays > 19:
+        flash('The count of the days can not be greater than 19 days')
+        return redirect(url_for('Index')) 
 
     tree_stocks = {}
 
