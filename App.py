@@ -35,10 +35,14 @@ def create_stocks():
     StockTextarea = request.form['StockTextarea'].upper().replace(" ", "")
 
     if StockTextarea.strip() == '':
-        flash('Please, Input Stocks on Stock Area')
+        flash('Please, Enter tickers on ticker Area')
         return redirect(url_for('Index'))
 
     symbol = StockTextarea.split(',')
+
+    if len(simbol) > 10:
+        flash('Please, Enter 10 tickers maximum')
+        return redirect(url_for('Index'))
 
     # Get Start Date
     SD = ObtainDate(request.form['datefrom'])
