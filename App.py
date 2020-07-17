@@ -91,7 +91,7 @@ def create_stocks():
             f = web.DataReader(stock, 'yahoo', SD, ED)
             
             #get earnig date            
-            yec_date = (datetime.date.fromtimestamp(yec.get_next_earnings_date(stock)) + datetime.timedelta(days=1))
+            yec_date = (datetime.date.fromtimestamp(yec.get_next_earnings_date(stock)))
             yec_count = (yec_date - TD).days
 
             if yec_count > 1:
