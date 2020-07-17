@@ -40,8 +40,8 @@ def create_stocks():
 
     symbol = StockTextarea.split(',')
 
-    if len(symbol) > 10:
-        flash('Please, Enter 10 tickers maximum')
+    if len(symbol) > 15:
+        flash('Please, Enter 15 tickers maximum')
         return redirect(url_for('Index'))
 
     # Get Start Date
@@ -80,8 +80,8 @@ def create_stocks():
     dt = (ED - SD)
     countDays = dt.days
 
-    if countDays > 19:
-        flash('The count of the days can not be greater than 19 days')
+    if countDays > 20:
+        flash('The count of the days can not be greater than 20 days')
         return redirect(url_for('Index')) 
 
     tree_stocks = {}
