@@ -40,8 +40,8 @@ def create_stocks():
 
     symbol = StockTextarea.split(',')
 
-    if len(symbol) > 15:
-        flash('Please, Enter 15 tickers maximum')
+    if len(symbol) > 10:
+        flash('Please, Enter 10 tickers maximum')
         return redirect(url_for('Index'))
 
     # Get Start Date
