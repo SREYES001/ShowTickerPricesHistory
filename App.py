@@ -90,14 +90,18 @@ def create_stocks():
             #get prices info 
             f = web.DataReader(stock, 'yahoo', SD, ED)
             
-            #get earnig date            
-            yec_date = (datetime.date.fromtimestamp(yec.get_next_earnings_date(stock)))
-            yec_count = (yec_date - TD).days
+            try:
+                #get earnig date            
+                yec_date = (datetime.date.fromtimestamp(yec.get_next_earnings_date(stock)))
+                yec_count = (yec_date - TD).days
 
-            if yec_count > 1:
-                yec_desc = str(yec_count) + ' days to earnings call'
-            else:
-                yec_desc = str(yec_count) + ' day to earnings call'
+                if yec_count > 1:
+                    yec_desc = str(yec_count) + ' days to earnings call'
+                else:
+                    yec_desc = str(yec_count) + ' day to earnings call'
+            except:
+                yec_desc = 'There is not earnings information'
+                continue     
        
             date_index = len(f)
 
