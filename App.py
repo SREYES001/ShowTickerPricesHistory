@@ -4,6 +4,7 @@ import datetime
 #import pandas as pd
 import pandas_datareader as web
 #from pandas.util.testing import assert_frame_equal
+from yahoo_earnings_calendar import YahooEarningsCalendar
 
 
 # Start a server
@@ -16,7 +17,6 @@ def ObtainDate(pDate):
     try:  # strptime throws an exception if the input doesn't match the pattern
         d = datetime.datetime.strptime(pDate, "%Y-%m-%d")
     except:
-        print('Incorrect date format\n')
         flash('Invalid date format. Please, input a valid date.')
         d = ''
 
@@ -82,10 +82,22 @@ def create_stocks():
 
     tree_stocks = {}
 
+    #Set earnigs
+    yec = YahooEarningsCalendar()
+
     for stock in symbol:
         try:
             #get prices info 
-            f = web.DataReader(stock, 'yahoo', SD, ED)        
+            f = web.DataReader(stock, 'yahoo', SD, ED)
+            
+            #get earnig date            
+            yec_date = (datetime.date.fromtimestamp(yec.get_next_earnings_date(stock)) + datetime.timedelta(days=1))
+            yec_count = (yec_date - TD).days
+
+            if yec_count > 1:
+                yec_desc = str(yec_count) + ' days to earnings call'
+            else:
+                yec_desc = str(yec_count) + ' day to earnings call'
        
             date_index = len(f)
 
@@ -120,10 +132,9 @@ def create_stocks():
             #tree_stocks[stock+'1'] = info_stock.calendar.loc[info_stock.calendar.index[0],'Value'].strftime("%Y-%m-%d")
             #tree_stocks[stock+'1'] = stock
             tree_stock[stock+'0'] = 'DATA_FOUND'
-            tree_stock[stock+'1'] = list_dates
-            tree_stock[stock+'2'] = list_prices        
-
-            print("Symbol: " + stock)
+            tree_stock[stock+'1'] = yec_desc
+            tree_stock[stock+'2'] = list_dates
+            tree_stock[stock+'3'] = list_prices        
    
         except:
             tree_stock = {}
