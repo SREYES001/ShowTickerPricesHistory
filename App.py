@@ -115,6 +115,12 @@ def create_stocks():
 
             try:
                 #get Name and Industry
+                current_price = str(m.financial_data[stock]['currentPrice'])
+            except:
+                current_price = ''                
+
+            try:
+                #get Name and Industry
                 stock_name = m.price[stock]['longName']
                 stock_industry = 'Industry: ' + m.asset_profile[stock]['industry']
             except:
@@ -157,9 +163,10 @@ def create_stocks():
             tree_stock[stock+'0'] = 'DATA_FOUND'
             tree_stock[stock+'1'] = stock_name
             tree_stock[stock+'2'] = stock_industry
-            tree_stock[stock+'3'] = yec_desc            
-            tree_stock[stock+'4'] = list_dates
-            tree_stock[stock+'5'] = list_prices        
+            tree_stock[stock+'3'] = yec_desc  
+            tree_stock[stock+'4'] = current_price         
+            tree_stock[stock+'5'] = list_dates
+            tree_stock[stock+'6'] = list_prices        
    
         except:
             tree_stock = {}
