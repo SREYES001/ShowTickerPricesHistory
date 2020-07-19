@@ -12,19 +12,20 @@
 {% for stock in pTreeStocks %}
 {% if pTreeStocks[stock][stock+'0'] == 'DATA_FOUND' %}
 <p> </p>
-<p class="h4 text-light">{{ stock }}</p>
-<p class="h6 text-warning">{{ pTreeStocks[stock][stock+'1']}}</p>
+<p class="h4 text-light">{{ stock }}  <strong class="h6 text-light">{{ pTreeStocks[stock][stock+'1']}}</strong> </p>
+<p class="h6 text-light">{{ pTreeStocks[stock][stock+'2']}}</p>
+<p class="h6 text-warning">{{ pTreeStocks[stock][stock+'3']}}</p>
 <div class="table-responsive">
     <table class="table table-striped table-sm bg-white table-bordered bg-white">
         <thead>
             <tr>
-                {% for vdate in pTreeStocks[stock][stock+'2'] %}
+                {% for vdate in pTreeStocks[stock][stock+'4'] %}
                 <td>{{vdate}}</td>
                 {% endfor %}
             </tr>
         <tbody>
             <tr>
-                {% for vprice in pTreeStocks[stock][stock+'3'] %}
+                {% for vprice in pTreeStocks[stock][stock+'5'] %}
                 <td>{{vprice}}</td>
                 {% endfor %}
             </tr>
