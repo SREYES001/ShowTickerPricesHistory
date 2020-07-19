@@ -96,6 +96,8 @@ def create_stocks():
         try:
             #get prices info 
             f = web.DataReader(stock, 'yahoo', SD, ED)
+
+            l_count_stock = len(f)
             
             try:
                 #get earnig date            
@@ -115,8 +117,10 @@ def create_stocks():
 
             try:
                 #get Name and Industry
-                current_price = str(m.financial_data[stock]['currentPrice'])
+                l_current_price = m.financial_data[stock]['currentPrice']
+                current_price = str(l_current_price)
             except:
+                l_current_price = 0
                 current_price = ''                
 
             try:
@@ -127,7 +131,7 @@ def create_stocks():
                 stock_name = ''
                 stock_industry = ''
 
-            date_index = len(f)
+            date_index = l_count_stock
 
             #count dates
             if date_index > 0:
@@ -140,22 +144,29 @@ def create_stocks():
 
             list_dates.append('Date')     
         
-            for i in range(len(f)):
-                if i == 0:
-                    list_dates.append(f.index[date_index - i].strftime("%Y-%m-%d"))
-                else:
-                    list_dates.append(f.index[date_index - i].strftime("%Y-%m-%d"))
+            for i in range(l_count_stock):
+                list_dates.append(f.index[date_index - i].strftime("%Y-%m-%d"))
 
             #Build List Prices
             list_prices = []
             
             list_prices.append('Close Price')
 
-            for i in range(len(f)):
-                if i == 0:
-                    list_prices.append("{:.2f}".format(f.loc[f.index[date_index - i],'Close']))
-                else:
-                    list_prices.append("{:.2f}".format(f.loc[f.index[date_index - i],'Close']))        
+            l_date_price = 0
+
+            for i in range(l_count_stock):
+                date_price = f.loc[f.index[date_index - i],'Close']
+                l_date_price +=  date_price
+                list_prices.append("{:.2f}".format(date_price))
+                
+            #get average stock    
+            l_average_stock = (l_date_price/l_count_stock)
+            #get difference
+            l_difference = (l_current_price - l_average_stock)
+
+            if l_current_price != 0:
+                l_average_dif = (l_difference/l_current_price)*100
+
 
             #tree_stocks[stock+'0'] = info_stock.info['industry']
             #tree_stocks[stock+'1'] = info_stock.calendar.loc[info_stock.calendar.index[0],'Value'].strftime("%Y-%m-%d")
@@ -165,9 +176,10 @@ def create_stocks():
             tree_stock[stock+'2'] = stock_industry
             tree_stock[stock+'3'] = yec_desc  
             tree_stock[stock+'4'] = current_price         
-            tree_stock[stock+'5'] = list_dates
-            tree_stock[stock+'6'] = list_prices        
-   
+            tree_stock[stock+'5'] = 'Average Price: ' + "{:.2f}".format(l_average_stock)
+            tree_stock[stock+'6'] = 'Rerturning to Avg: ' + "{:.2f}".format(l_difference) + '   (' + "{:.2f}".format(l_average_dif) + '%)' 
+            tree_stock[stock+'7'] = list_dates
+            tree_stock[stock+'8'] = list_prices        
         except:
             tree_stock = {}
             tree_stock[stock+'0'] = 'NO_DATA_FOUND'
