@@ -102,12 +102,17 @@ def create_stocks():
                 if yec_count > 1:
                     yec_desc = str(yec_count) + ' days to earnings call'
                 else:
-                    yec_desc = str(yec_count) + ' day to earnings call'
+                    if yec_count >= 0:
+                        yec_desc = str(yec_count) + ' day to earnings call'
+                    else:
+                        yec_desc = ''
+
             except:
-                yec_desc = 'There is not earnings information'     
+                yec_desc = ''     
        
             date_index = len(f)
 
+            #count dates
             if date_index > 0:
                 date_index = date_index - 1
             
