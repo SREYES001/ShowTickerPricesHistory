@@ -144,6 +144,7 @@ def create_stocks():
 
             list_dates.append('Date')     
         
+            #get dates
             for i in range(l_count_stock):
                 list_dates.append(f.index[date_index - i].strftime("%Y-%m-%d"))
 
@@ -153,7 +154,8 @@ def create_stocks():
             list_prices.append('Close Price')
 
             l_date_price = 0
-
+            
+            #get prices
             for i in range(l_count_stock):
                 date_price = f.loc[f.index[date_index - i],'Close']
                 l_date_price +=  date_price
@@ -177,7 +179,7 @@ def create_stocks():
             tree_stock[stock+'3'] = yec_desc  
             tree_stock[stock+'4'] = current_price         
             tree_stock[stock+'5'] = 'Average Price: ' + "{:.2f}".format(l_average_stock)
-            tree_stock[stock+'6'] = 'Rerturning to Avg: ' + "{:.2f}".format(l_difference) + '   (' + "{:.2f}".format(l_average_dif) + '%)' 
+            tree_stock[stock+'6'] = 'Returning to Avg: ' + "{:.2f}".format(l_difference) + '   (' + "{:.2f}".format(l_average_dif) + '%)' 
             tree_stock[stock+'7'] = list_dates
             tree_stock[stock+'8'] = list_prices        
         except:
