@@ -162,7 +162,7 @@ def create_stocks():
             #get average stock    
             l_average_stock = (l_date_price/l_count_stock)
             #get difference
-            l_difference = (l_current_price - l_average_stock)
+            l_difference = (l_average_stock - l_current_price)
 
             if l_current_price != 0:
                 l_average_dif = (l_difference/l_current_price)*100
