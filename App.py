@@ -87,8 +87,8 @@ def create_stocks():
     dt = (ED - SD)
     countDays = dt.days
 
-    if countDays > 20:
-        flash('The count of the days can not be greater than 20 days')
+    if countDays > 30:
+        flash('The count of the days can not be greater than 30 days')
         return redirect(url_for('Index')) 
 
     tree_stocks = {}
