@@ -11,8 +11,9 @@ from yahooquery import Ticker
 # Start a server
 app = Flask(__name__)
 
+
 # setting
-app.secret_key = 'mysecretkey'
+#app.secret_key = 'mysecretkey'
 
 def ObtainDate(pDate):
     try:  # strptime throws an exception if the input doesn't match the pattern
@@ -34,6 +35,11 @@ def create_stocks():
 
     # read ticker symbols from the text area
     StockTextarea = request.form['StockTextarea'].upper().replace(" ", "")
+
+    """# read ticker symbols from the text area
+    volume = request.form['volume']"""
+
+    #print('Volume flag: ' + volume)
 
     if StockTextarea.strip() == '':
         flash('Please, Enter tickers on ticker Area')
