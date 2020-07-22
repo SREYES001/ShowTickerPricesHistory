@@ -98,12 +98,16 @@ def create_stocks():
 
     m = Ticker(symbol)
 
+    list_dates = []
+
     for stock in symbol:
         try:
             #get prices info 
             f = web.DataReader(stock, 'yahoo', SD, ED)
 
             l_count_stock = len(f)
+            
+            list_yec = []
 
             try:
                 #get earnig date            
@@ -118,13 +122,15 @@ def create_stocks():
                     else:
                         yec_desc = ''
 
+                list_yec.append(yec_count)
+                list_yec.append(yec_desc)
             except:
-                yec_desc = ''
+                list_yec = []
 
             try:
                 #get Name and Industry
                 l_current_price = m.financial_data[stock]['currentPrice']
-                current_price = str(l_current_price)
+                current_price = "{:.2f}".format(l_current_price)
             except:
                 l_current_price = 0
                 current_price = ''                
@@ -146,18 +152,15 @@ def create_stocks():
             tree_stock = {}    
 
             #Build List Dates
-            list_dates = []   
-
-            list_dates.append('Date')     
-        
-            #get dates
-            for i in range(l_count_stock):
-                list_dates.append(f.index[date_index - i].strftime("%Y-%m-%d"))
+            if len(list_dates) == 0:
+                list_dates = []    
+                
+                #get dates
+                for i in range(l_count_stock):
+                    list_dates.append(f.index[date_index - i].strftime("%Y-%m-%d"))
 
             #Build List Prices
             list_prices = []
-            
-            list_prices.append('Close Price')
 
             l_date_price = 0
             
@@ -179,15 +182,21 @@ def create_stocks():
             #tree_stocks[stock+'0'] = info_stock.info['industry']
             #tree_stocks[stock+'1'] = info_stock.calendar.loc[info_stock.calendar.index[0],'Value'].strftime("%Y-%m-%d")
             #tree_stocks[stock+'1'] = stock
+            average_list = []
+            average_list.append("{:.2f}".format(l_average_stock))
+            average_list.append('Average Price: ' + "{:.2f}".format(l_average_stock))
+            average_list.append("{:.2f}".format(l_difference) + '   (' + "{:.2f}".format(l_average_dif) + '%)')
+            average_list.append('Returning to Avg: ' + "{:.2f}".format(l_difference) + '   (' + "{:.2f}".format(l_average_dif) + '%)')
+
+
             tree_stock[stock+'0'] = 'DATA_FOUND'
             tree_stock[stock+'1'] = stock_name
             tree_stock[stock+'2'] = stock_industry
-            tree_stock[stock+'3'] = yec_desc  
+            tree_stock[stock+'3'] = list_yec  
             tree_stock[stock+'4'] = current_price         
-            tree_stock[stock+'5'] = 'Average Price: ' + "{:.2f}".format(l_average_stock)
-            tree_stock[stock+'6'] = 'Returning to Avg: ' + "{:.2f}".format(l_difference) + '   (' + "{:.2f}".format(l_average_dif) + '%)' 
-            tree_stock[stock+'7'] = list_dates
-            tree_stock[stock+'8'] = list_prices        
+            tree_stock[stock+'5'] = average_list
+            #tree_stock[stock+'7'] = list_dates
+            tree_stock[stock+'6'] = list_prices        
         except:
             tree_stock = {}
             tree_stock[stock+'0'] = 'NO_DATA_FOUND'
@@ -195,9 +204,12 @@ def create_stocks():
             tree_stocks[stock] = tree_stock
             continue 
 
-        tree_stocks[stock] = tree_stock 
+        tree_stocks[stock] = tree_stock
 
-    return render_template('create_stocks.html', pTreeStocks=tree_stocks)
+    
+    tree_stocks['DATES'] = list_dates    
+
+    return render_template('create_stocks.html', pTreeStocks=tree_stocks)    
 
 if __name__ == '__main__':
     # debug--> Use when we had changes into the server so restart the server
