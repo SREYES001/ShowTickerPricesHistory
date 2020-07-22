@@ -74,6 +74,7 @@
         <tbody>
             <tr>
                 <td>Stock</td>
+                <td style="text-align:right">Current Price</td>                
                 <td style="text-align:right">Earning Day</td>
                 <td style="text-align:right">Average Price</td>
                 <td style="text-align:right">Return to Avg</td>
@@ -84,7 +85,8 @@
             {% for stock in pTreeStocks %}
             <tr>             
                 {% if pTreeStocks[stock][stock+'0'] == 'DATA_FOUND' %} 
-                <td>{{ stock }}</td>
+                <td>{{ stock }}</td>                
+                <td style="text-align:right">{{ pTreeStocks[stock][stock+'4']}}</td>
                 <td style="text-align:right">{{ pTreeStocks[stock][stock+'3'][0]}}</td>
                 <td style="text-align:right">{{ pTreeStocks[stock][stock+'5'][0]}}</td>
                 <td style="text-align:right">{{ pTreeStocks[stock][stock+'5'][2]}}</td>
