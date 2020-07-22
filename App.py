@@ -106,22 +106,6 @@ def create_stocks():
             l_count_stock = len(f)
 
             yec_desc = ''
-            
-      """      try:
-                #get earnig date            
-                yec_date = (datetime.date.fromtimestamp(yec.get_next_earnings_date(stock)))
-                yec_count = (yec_date - TD).days
-
-                if yec_count > 1:
-                    yec_desc = str(yec_count) + ' days to earnings call'
-                else:
-                    if yec_count >= 0:
-                        yec_desc = str(yec_count) + ' day to earnings call'
-                    else:
-                        yec_desc = ''
-
-            except:
-                yec_desc = ''    """
 
             try:
                 #get Name and Industry
