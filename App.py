@@ -104,8 +104,10 @@ def create_stocks():
             f = web.DataReader(stock, 'yahoo', SD, ED)
 
             l_count_stock = len(f)
+
+            yec_desc = ''
             
-            try:
+      """      try:
                 #get earnig date            
                 yec_date = (datetime.date.fromtimestamp(yec.get_next_earnings_date(stock)))
                 yec_count = (yec_date - TD).days
@@ -119,7 +121,7 @@ def create_stocks():
                         yec_desc = ''
 
             except:
-                yec_desc = ''    
+                yec_desc = ''    """
 
             try:
                 #get Name and Industry
