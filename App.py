@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 
 # setting
-#app.secret_key = 'mysecretkey'
+app.secret_key = 'mysecretkey'
 
 def ObtainDate(pDate):
     try:  # strptime throws an exception if the input doesn't match the pattern
