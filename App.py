@@ -185,7 +185,8 @@ def create_stocks():
             average_list = []
             average_list.append("{:.2f}".format(l_average_stock))
             average_list.append('Average Price: ' + "{:.2f}".format(l_average_stock))
-            average_list.append("{:.2f}".format(l_difference) + '   (' + "{:.2f}".format(l_average_dif) + '%)')
+            average_list.append("{:.2f}".format(l_difference))
+            average_list.append("{:.2f}".format(l_average_dif) + '%')
             average_list.append('Returning to Avg: ' + "{:.2f}".format(l_difference) + '   (' + "{:.2f}".format(l_average_dif) + '%)')
 
 
