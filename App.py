@@ -121,6 +121,7 @@ def create_stocks():
                         yec_desc = str(yec_count) + ' day to earnings call'
                     else:
                         yec_desc = ''
+                        yec_count = ''
 
                 list_yec.append(yec_count)
                 list_yec.append(yec_desc)
