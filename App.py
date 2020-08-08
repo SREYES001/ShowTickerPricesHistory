@@ -41,29 +41,40 @@ def create_stocks():
 
     #print('Volume flag: ' + volume)
 
+    is_error = False
+
     if StockTextarea.strip() == '':
         flash('Please, Enter tickers on ticker Area')
-        return redirect(url_for('Index'))
+        is_error = True        
 
+    
     symbol = StockTextarea.split(',')
+
+    symbol_index = StockTextarea.split(',')
+
+    symbol_index.append('NDAQ')
+    symbol_index.append('^DJI')
+    symbol_index.append('^GSPC')
+   
 
     if len(symbol) > 10:
         flash('Please, Enter 10 tickers maximum')
-        return redirect(url_for('Index'))
+        is_error = True
+
 
     # Get Start Date
     SD = ObtainDate(request.form['datefrom'])
      
     #Print if there is a error with the date SD
     if SD == '':
-        return redirect(url_for('Index'))    
+        is_error = True   
     
     # Get End Date
     ED = ObtainDate(request.form['dateto'])
     
     #Print if there is a error with the date ED
     if ED == '':
-        return redirect(url_for('Index'))
+        is_error = True
 
    # Get Current Date
     TD = datetime.date.today()
@@ -71,17 +82,17 @@ def create_stocks():
    #Print if there is a error with the date ED
     if SD.strftime("%Y%m%d") > TD.strftime("%Y%m%d"):
         flash('The start date can not higher than today')
-        return redirect(url_for('Index'))  
+        is_error = True
 
     #Print if there is a error with the date ED
     if ED.strftime("%Y%m%d") > TD.strftime("%Y%m%d"):
         flash('The end date can not higher than today')
-        return redirect(url_for('Index'))  
+        is_error = True  
 
     #Print if there is a error with the date ED
     if ED <  SD:
         flash('The end date can''t be less than the start date')
-        return redirect(url_for('Index'))           
+        is_error = True           
 
     # Get number of days<
     dt = (ED - SD)
@@ -89,14 +100,45 @@ def create_stocks():
 
     if countDays > 30:
         flash('The count of the days can not be greater than 30 days')
-        return redirect(url_for('Index')) 
+        is_error = True 
+    
+    if is_error:
+        return redirect(url_for('Index'))
+        #return redirect(url_for('Index',PstockTextarea =request.form['StockTextarea'],P_StartDate=request.form['datefrom'],P_EndDate=request.form['dateto']))
+
+    list_yec = []
 
     tree_stocks = {}
 
-    #Set earnigs
-    #yec = YahooEarningsCalendar()
+    #Set tickers
+    m = Ticker(symbol_index)
 
-    m = Ticker(symbol)
+    #Get index prices
+    list_NDAQ = []
+    
+    list_NDAQ.append(m.price['NDAQ']['shortName'])
+    list_NDAQ.append("{:.2f}".format(m.price['NDAQ']['regularMarketPrice']))  
+    list_NDAQ.append("{:.2f}".format(m.price['NDAQ']['regularMarketChange']))    
+    list_NDAQ.append("{:.2f}".format(m.price['NDAQ']['regularMarketChangePercent'] * 100))   
+
+    list_DJI = []
+
+    list_DJI.append(m.price['^DJI']['shortName'])
+    list_DJI.append("{:.2f}".format(m.price['^DJI']['regularMarketPrice'])) 
+    list_DJI.append("{:.2f}".format(m.price['^DJI']['regularMarketChange']))    
+    list_DJI.append("{:.2f}".format(m.price['^DJI']['regularMarketChangePercent'] * 100))   
+
+    list_GSPC = []
+    
+    list_GSPC.append(m.price['^GSPC']['shortName'])
+    list_GSPC.append("{:.2f}".format(m.price['^GSPC']['regularMarketPrice']))  
+    list_GSPC.append("{:.2f}".format(m.price['^GSPC']['regularMarketChange']))    
+    list_GSPC.append("{:.2f}".format(m.price['^GSPC']['regularMarketChangePercent'] * 100))     
+
+    tree_stocks['NDAQ'] = list_NDAQ
+    tree_stocks['DJI'] = list_DJI 
+    tree_stocks['GSPC'] = list_GSPC 
+    #End Index  
 
     list_dates = []
 

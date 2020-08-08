@@ -8,7 +8,31 @@
         </p>
     </div>
 </div>
-
+<p> </p>
+<div class="col-md-6 order-md-1">
+    <div class="table-responsive">
+        <table class="table table-sm bg-white table-bordered bg-white">
+            <tbody>
+                <tr>
+                    <td class="table-danger" style="text-align:center"><strong class="h5 text-dark">{{ pTreeStocks['NDAQ'][0]}}</strong></td>
+                    <td class="table-primary" style="text-align:center"><strong class="h5 text-dark">{{ pTreeStocks['NDAQ'][1]}}</strong> {{ pTreeStocks['NDAQ'][2]}}
+                        ({{ pTreeStocks['NDAQ'][3]}}%)</td>
+                </tr>
+                <tr>
+                    <td class="table-danger" style="text-align:center"><strong class="h5 text-dark">{{ pTreeStocks['DJI'][0]}}</strong></td>
+                    <td class="table-primary" style="text-align:center"><strong class="h5 text-dark">{{ pTreeStocks['DJI'][1]}}</strong> {{ pTreeStocks['DJI'][2]}}
+                        ({{ pTreeStocks['DJI'][3]}}%)</td>
+                </tr>
+                <tr>
+                    <td class="table-danger" style="text-align:center"><strong class="h5 text-dark">{{ pTreeStocks['GSPC'][0]}}</strong></td>
+                    <td class="table-primary" style="text-align:center"><strong class="h5 text-dark">{{ pTreeStocks['GSPC'][1]}}</strong> {{ pTreeStocks['GSPC'][2]}}
+                        ({{ pTreeStocks['GSPC'][3]}}%)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<p> </p>
 {% for stock in pTreeStocks %}
 {% if pTreeStocks[stock][stock+'0'] == 'DATA_FOUND' %}
 <p> </p>
@@ -74,7 +98,7 @@
         <tbody>
             <tr>
                 <td>Stock</td>
-                <td style="text-align:right">Current Price</td>                
+                <td style="text-align:right">Current Price</td>
                 <td style="text-align:right">Earning Day</td>
                 <td style="text-align:right">Average Price</td>
                 <td style="text-align:right">Return to </td>
@@ -84,9 +108,9 @@
                 {% endfor %}
             </tr>
             {% for stock in pTreeStocks %}
-            <tr>             
-                {% if pTreeStocks[stock][stock+'0'] == 'DATA_FOUND' %} 
-                <td>{{ stock }}</td>                
+            <tr>
+                {% if pTreeStocks[stock][stock+'0'] == 'DATA_FOUND' %}
+                <td>{{ stock }}</td>
                 <td style="text-align:right">{{ pTreeStocks[stock][stock+'4']}}</td>
                 <td style="text-align:right">{{ pTreeStocks[stock][stock+'3'][0]}}</td>
                 <td style="text-align:right">{{ pTreeStocks[stock][stock+'5'][0]}}</td>
@@ -95,7 +119,7 @@
                 {% for vprice in pTreeStocks[stock][stock+'6'] %}
                 <td style="text-align:right">{{vprice}}</td>
                 {% endfor %}
-                {% endif %}                
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
