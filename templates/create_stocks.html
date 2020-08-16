@@ -14,18 +14,24 @@
         <table class="table table-sm bg-white table-bordered bg-white">
             <tbody>
                 <tr>
-                    <td class="table-danger" style="text-align:center"><strong class="h5 text-dark">{{ pTreeStocks['NDAQ'][0]}}</strong></td>
-                    <td class="table-primary" style="text-align:center"><strong class="h5 text-dark">{{ pTreeStocks['NDAQ'][1]}}</strong> {{ pTreeStocks['NDAQ'][2]}}
+                    <td class="table-danger" style="text-align:center"><strong
+                            class="h5 text-dark">{{ pTreeStocks['NDAQ'][0]}}</strong></td>
+                    <td class="table-primary" style="text-align:center"><strong
+                            class="h5 text-dark">{{ pTreeStocks['NDAQ'][1]}}</strong> {{ pTreeStocks['NDAQ'][2]}}
                         ({{ pTreeStocks['NDAQ'][3]}}%)</td>
                 </tr>
                 <tr>
-                    <td class="table-danger" style="text-align:center"><strong class="h5 text-dark">{{ pTreeStocks['DJI'][0]}}</strong></td>
-                    <td class="table-primary" style="text-align:center"><strong class="h5 text-dark">{{ pTreeStocks['DJI'][1]}}</strong> {{ pTreeStocks['DJI'][2]}}
+                    <td class="table-danger" style="text-align:center"><strong
+                            class="h5 text-dark">{{ pTreeStocks['DJI'][0]}}</strong></td>
+                    <td class="table-primary" style="text-align:center"><strong
+                            class="h5 text-dark">{{ pTreeStocks['DJI'][1]}}</strong> {{ pTreeStocks['DJI'][2]}}
                         ({{ pTreeStocks['DJI'][3]}}%)</td>
                 </tr>
                 <tr>
-                    <td class="table-danger" style="text-align:center"><strong class="h5 text-dark">{{ pTreeStocks['GSPC'][0]}}</strong></td>
-                    <td class="table-primary" style="text-align:center"><strong class="h5 text-dark">{{ pTreeStocks['GSPC'][1]}}</strong> {{ pTreeStocks['GSPC'][2]}}
+                    <td class="table-danger" style="text-align:center"><strong
+                            class="h5 text-dark">{{ pTreeStocks['GSPC'][0]}}</strong></td>
+                    <td class="table-primary" style="text-align:center"><strong
+                            class="h5 text-dark">{{ pTreeStocks['GSPC'][1]}}</strong> {{ pTreeStocks['GSPC'][2]}}
                         ({{ pTreeStocks['GSPC'][3]}}%)</td>
                 </tr>
             </tbody>
@@ -37,7 +43,8 @@
 {% if pTreeStocks[stock][stock+'0'] == 'DATA_FOUND' %}
 <p> </p>
 <p class="h4 text-light">{{ stock }} <strong class="h6 text-light">{{ pTreeStocks[stock][stock+'1']}}</strong> <strong
-        class="h3 text-warning">{{ pTreeStocks[stock][stock+'4']}}</strong> </p>
+        class="h3 text-warning">{{ pTreeStocks[stock][stock+'4']}}</strong> <strong class="h6 ChangeColor">{{ pTreeStocks[stock][stock+'5'][5]}}</strong> <strong
+        class="h6 ChangeColor">{{ pTreeStocks[stock][stock+'5'][6]}}</strong><strong class="h6">%</strong></p> 
 <p class="h6 text-light">{{ pTreeStocks[stock][stock+'2']}}</p>
 <p class="h6 text-warning">{{ pTreeStocks[stock][stock+'3'][1]}}</p>
 <p class="h6 text-light">{{ pTreeStocks[stock][stock+'5'][1]}}</p>
@@ -99,6 +106,12 @@
             <tr>
                 <td>Stock</td>
                 <td style="text-align:right">Current Price</td>
+                <td style="text-align:right">Change</td>
+                <td style="text-align:right">Chg%</td>
+                <td style="text-align:right">Post Mkt Change</td>
+                <td style="text-align:right">Post Mkt Chg%</td>
+                <td style="text-align:right">Pre Mkt Change</td>
+                <td style="text-align:right">Pre Mkt Chg%</td>
                 <td style="text-align:right">Earning Day</td>
                 <td style="text-align:right">Average Price</td>
                 <td style="text-align:right">Return to </td>
@@ -112,6 +125,12 @@
                 {% if pTreeStocks[stock][stock+'0'] == 'DATA_FOUND' %}
                 <td>{{ stock }}</td>
                 <td style="text-align:right">{{ pTreeStocks[stock][stock+'4']}}</td>
+                <td style="text-align:right"><strong class="ChangeColor">{{ pTreeStocks[stock][stock+'5'][5]}}</strong></td>
+                <td style="text-align:right"><strong class="ChangeColor">{{ pTreeStocks[stock][stock+'5'][6]}}</strong></td>
+                <td style="text-align:right"><strong class="ChangeColor">{{ pTreeStocks[stock][stock+'5'][7]}}</strong></td>
+                <td style="text-align:right"><strong class="ChangeColor">{{ pTreeStocks[stock][stock+'5'][8]}}</strong></td>
+                <td style="text-align:right"><strong class="ChangeColor">{{ pTreeStocks[stock][stock+'5'][9]}}</strong></td>
+                <td style="text-align:right"><strong class="ChangeColor">{{ pTreeStocks[stock][stock+'5'][10]}}</strong></td>
                 <td style="text-align:right">{{ pTreeStocks[stock][stock+'3'][0]}}</td>
                 <td style="text-align:right">{{ pTreeStocks[stock][stock+'5'][0]}}</td>
                 <td style="text-align:right">{{ pTreeStocks[stock][stock+'5'][2]}}</td>
@@ -135,5 +154,18 @@
         </p>
     </div>
 </div>
+
+<script>
+    var els = document.getElementsByClassName('ChangeColor');
+    for (var i = 0; i < els.length; i++) {
+        var cell = els[i];
+        if (cell.textContent < 0) {
+            cell.classList.remove('green')
+        } else {
+            cell.classList.add('green');
+        }
+    }
+</script>
+
 
 {% endblock %}

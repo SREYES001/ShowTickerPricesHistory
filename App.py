@@ -186,6 +186,46 @@ def create_stocks():
                 stock_name = ''
                 stock_industry = ''
 
+            #reset values
+            ChangeStock = ''
+            ChangeStock_percent = ''
+            ChangeStock_pre = ''
+            ChangeStock_percent_pre = ''
+            ChangeStock_post = ''
+            ChangeStock_percent_post = ''                
+
+            try:
+                #get Change
+                l_change = m.price[stock]['regularMarketChange']
+                ChangeStock = "{:.2f}".format(l_change)
+                l_change_percent = m.price[stock]['regularMarketChangePercent']*100
+                ChangeStock_percent  = "{:.2f}".format(l_change_percent)               
+            except:
+                ChangeStock = ''
+                ChangeStock_percent = ''
+
+            try:
+                #get Change pre
+                l_change_pre = m.price[stock]['preMarketChange']
+                ChangeStock_pre = "{:.2f}".format(l_change_pre)
+                l_change_percent_pre = m.price[stock]['preMarketChangePercent']*100
+                ChangeStock_percent_pre  = "{:.2f}".format(l_change_percent_pre)              
+            except:
+                ChangeStock_pre = ''
+                ChangeStock_percent_pre = ''
+
+            try:
+                #get Change post
+                l_change_post = m.price[stock]['postMarketChange']
+                ChangeStock_post = "{:.2f}".format(l_change_post)
+                l_change_percent_post = m.price[stock]['postMarketChangePercent']*100
+                ChangeStock_percent_post  = "{:.2f}".format(l_change_percent_post)               
+            except:
+                ChangeStock_post = ''
+                ChangeStock_percent_post = ''                                
+
+                     
+
             date_index = l_count_stock
 
             #count dates
@@ -231,6 +271,14 @@ def create_stocks():
             average_list.append("{:.2f}".format(l_difference))
             average_list.append("{:.2f}".format(l_average_dif) + '%')
             average_list.append('Returning to Avg: ' + "{:.2f}".format(l_difference) + '   (' + "{:.2f}".format(l_average_dif) + '%)')
+            average_list.append(ChangeStock)
+            average_list.append(ChangeStock_percent)  
+            average_list.append(ChangeStock_post)
+            average_list.append(ChangeStock_percent_post)  
+            average_list.append(ChangeStock_pre)
+            average_list.append(ChangeStock_percent_pre)                          
+
+            ChangeStock_percent_pre
 
 
             tree_stock[stock+'0'] = 'DATA_FOUND'
@@ -240,7 +288,7 @@ def create_stocks():
             tree_stock[stock+'4'] = current_price         
             tree_stock[stock+'5'] = average_list
             #tree_stock[stock+'7'] = list_dates
-            tree_stock[stock+'6'] = list_prices        
+            tree_stock[stock+'6'] = list_prices   
         except:
             tree_stock = {}
             tree_stock[stock+'0'] = 'NO_DATA_FOUND'
@@ -251,7 +299,8 @@ def create_stocks():
         tree_stocks[stock] = tree_stock
 
     
-    tree_stocks['DATES'] = list_dates    
+    tree_stocks['DATES'] = list_dates 
+  
 
     return render_template('create_stocks.html', pTreeStocks=tree_stocks)    
 
