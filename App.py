@@ -98,8 +98,8 @@ def create_stocks():
     dt = (ED - SD)
     countDays = dt.days
 
-    if countDays > 30:
-        flash('The count of the days can not be greater than 30 days')
+    if countDays > 27:
+        flash('The count of the days can not be greater than 27 days')
         is_error = True 
     
     if is_error:
